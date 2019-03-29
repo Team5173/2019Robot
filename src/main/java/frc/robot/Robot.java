@@ -51,9 +51,8 @@ public class Robot extends TimedRobot {
     //Usb Cameras
     Camera1 = CameraServer.getInstance().startAutomaticCapture();
     Camera2 = CameraServer.getInstance().startAutomaticCapture();
-    Server = CameraServer.getInstance().getServer();
-    Camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
-    Camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kKeepOpen);
+    Camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kAutoManage);
+    Camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kAutoManage);
     Camera1.setVideoMode(PixelFormat.kMJPEG, 360, 360, 20);
     Camera2.setVideoMode(PixelFormat.kMJPEG, 360, 360, 20);
     Camera1.setBrightness(30);
@@ -74,7 +73,6 @@ public class Robot extends TimedRobot {
 
     //Xbox Controller
     Controller = new XboxController(0);
-    Joy1 = new Joystick(1);
 
     //Spinners
     leftSpinner = new VictorSPX(6);
@@ -165,9 +163,6 @@ public class Robot extends TimedRobot {
         pushPlunger.set(DoubleSolenoid.Value.kForward);
       }
     }*/
-
-    SmartDashboard.putNumber("RightLiftMotorCurrent", powerDistributionPanel.getCurrent(2));
-    SmartDashboard.putNumber("LeftLiftMotorCurrent", powerDistributionPanel.getCurrent(12));
   }
   public void teleopPeriodic() {
     teleop();
