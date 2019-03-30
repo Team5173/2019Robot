@@ -42,10 +42,10 @@ public class Robot extends TimedRobot {
     Camera1 = CameraServer.getInstance().startAutomaticCapture();
     Camera2 = CameraServer.getInstance().startAutomaticCapture();
     Camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kAutoManage);
-    Camera1.setVideoMode(PixelFormat.kMJPEG, 360, 360, 20);
+    Camera1.setVideoMode(PixelFormat.kMJPEG, 360, 360, 40);
     Camera1.setBrightness(30);
     Camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kAutoManage);
-    Camera2.setVideoMode(PixelFormat.kMJPEG, 360, 360, 20);
+    Camera2.setVideoMode(PixelFormat.kMJPEG, 360, 360, 40);
     Camera2.setBrightness(30);
     
     
