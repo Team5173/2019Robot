@@ -4,10 +4,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
-//import edu.wpi.first.wpilibj.Compressor;
-//import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -28,13 +25,8 @@ public class Robot extends TimedRobot {
   UsbCamera Camera2;
   VideoSink Server;
 
-  Joystick Joy1;
-
   VictorSPX leftSpinner, rightSpinner;
   VictorSP Left, Right;
-
-  /*DoubleSolenoid Plunger;
-  DoubleSolenoid pushPlunger;*/
 
   TalonSRX leftLiftMotor, rightLiftMotor, gripperFlipper;
   PowerDistributionPanel powerDistributionPanel = new PowerDistributionPanel();
@@ -44,19 +36,18 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-  //Compressor c;
-
   public void robotInit() {
 
     //Usb Cameras
     Camera1 = CameraServer.getInstance().startAutomaticCapture();
     Camera2 = CameraServer.getInstance().startAutomaticCapture();
     Camera1.setConnectionStrategy(VideoSource.ConnectionStrategy.kAutoManage);
-    Camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kAutoManage);
     Camera1.setVideoMode(PixelFormat.kMJPEG, 360, 360, 20);
-    Camera2.setVideoMode(PixelFormat.kMJPEG, 360, 360, 20);
     Camera1.setBrightness(30);
+    Camera2.setConnectionStrategy(VideoSource.ConnectionStrategy.kAutoManage);
+    Camera2.setVideoMode(PixelFormat.kMJPEG, 360, 360, 20);
     Camera2.setBrightness(30);
+    
     
 
     //Drive System
@@ -66,6 +57,7 @@ public class Robot extends TimedRobot {
     
     myDrive = new DifferentialDrive(Left, Right);
     myDrive.setRightSideInverted(false);
+
     //Lift Motor Controllers
     leftLiftMotor = new TalonSRX(4);
     rightLiftMotor = new TalonSRX(5);
@@ -81,18 +73,12 @@ public class Robot extends TimedRobot {
     //Arm Flipper
     gripperFlipper = new TalonSRX(8);
 
-    //Pnuematics
-    //c = new Compressor(0);
-    /*Plunger = new DoubleSolenoid(0, 1);
-    pushPlunger = new DoubleSolenoid(2, 3);*/
-
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
   }
   public void teleopInit() {
     super.teleopInit();
-    //c.setClosedLoopControl(true);
   }
 
   public void robotPeriodic() {
@@ -146,23 +132,6 @@ public class Robot extends TimedRobot {
       rightSpinner.set(ControlMode.PercentOutput, 0);
     }
 
-
-    //Use of the Solenoids
-    /*if (Controller.getRawButton(3)){
-      Plunger.set(DoubleSolenoid.Value.kForward);
-    }
-    else{
-      Plunger.set(DoubleSolenoid.Value.kReverse);
-    }
-
-    if (Controller.getAButtonPressed()){
-      if (pushPlunger.get() == DoubleSolenoid.Value.kForward){
-        pushPlunger.set(DoubleSolenoid.Value.kReverse);
-      }
-      else{
-        pushPlunger.set(DoubleSolenoid.Value.kForward);
-      }
-    }*/
   }
   public void teleopPeriodic() {
     teleop();
